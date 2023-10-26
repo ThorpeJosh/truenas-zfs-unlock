@@ -1,0 +1,16 @@
+---
+name: Test Code
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4
+      - name: ShellCheck
+        uses: ludeeus/action-shellcheck@2.0.0
