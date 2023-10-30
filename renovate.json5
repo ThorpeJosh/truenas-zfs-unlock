@@ -1,0 +1,30 @@
+{
+  /***** General settings *****/
+
+  // Use recommended defaults
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+
+  // Add reviewers and custom labels to pull requests
+  "reviewers": ["ThorpeJosh"],
+  "labels": ["dependencies"],
+
+
+  /***** Docker settings *****/
+
+  // docker:enableMajor preset, this is disabled by default
+  "packageRules": [
+    {
+      "datasources": ["docker"],
+      "updateTypes": ["major"],
+      "enabled": true
+    },
+  ],
+
+  // docker:pinDigests preset, this allows for reproducible builds
+  "docker": {
+    "pinDigests": true
+  }
+}
