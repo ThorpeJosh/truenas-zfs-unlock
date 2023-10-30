@@ -3,6 +3,8 @@
 [![GitHub License](https://img.shields.io/github/license/thorpejosh/truenas-zfs-unlock)](https://github.com/ThorpeJosh/truenas-zfs-unlock/blob/main/LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/thorpejosh/truenas-zfs-unlock)](https://github.com/thorpejosh/truenas-zfs-unlock/releases)
 [![Docker Pulls](https://img.shields.io/docker/pulls/thorpejosh/truenas-zfs-unlock)](https://hub.docker.com/r/thorpejosh/truenas-zfs-unlock)
+[![Tests](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/test.yml/badge.svg)](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/test.yml)
+[![Publish Docker Image](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/docker-publish.yml)
 
 Gives you control of your Truenas ZFS encryption keys by allowing you to store your keys offsite, unlock your datasets remotely, and unlock your data only when you need.
 
