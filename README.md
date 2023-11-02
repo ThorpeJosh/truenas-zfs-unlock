@@ -11,7 +11,7 @@ Gives you control of your Truenas ZFS encryption keys by allowing you to store y
 ## Why?
 ZFS dataset encryption provides many security benefits, some of the main ones being; the securing of physical data drives at rest, during transport, after disposal, or in the case hardware is stolen.
 
-This all obviously relies on the proper management of the encryption keys to make sure they don't fall into the wrong hands along with the data drives.
+This all relies on the proper management of the encryption keys to make sure they don't fall into the wrong hands along with the data drives.
 
 Unfortunately Truenas stores ZFS dataset encryption keys on the boot drive which is physically located with all the encrypted drives, undermining most of the benefits of having encryption.
 
@@ -32,9 +32,8 @@ To protect the data on your drives from falling into the wrong hands during tran
 
 This image uses semver releases with the major version matching the Truenas API version that is used.
 
-> [!NOTE]  
-> Avoid using the `latest` tag in production environments  
-> Lock the tag to a specific version
+
+**Avoid using the `latest` tag in production environments. Lock the tag to a specific version**
 
 ### Registries
 The image is published on both [docker.io](https://hub.docker.com/r/thorpejosh/truenas-zfs-unlock) and [ghcr.io](https://github.com/ThorpeJosh/ssh-agent-docker/pkgs/container/truenas-zfs-unlock), and can be pulled with either:
@@ -69,8 +68,8 @@ You can set any environment variable from a file by prepending it with `FILE__`.
 For example if you had a file mounted at `/run/secrets/dataset_key` that contained your zfs `pool/dataset` encryption key then simply set an environment variable `FILE__ZFS__pool__dataset=/var/run/secrets/dataset_key`
 
 ### Running on demand
-If you want to unlock your datasets manually, then override the container command with `unlock`.
-For docker compose use `command: unlock`:
+If you want to unlock your datasets manually, then override the container entry command with `unlock`.
+#### docker-compose
 ```yaml
 ---
 services:
@@ -82,9 +81,9 @@ services:
       - ZFS__tank__photos=SomeSecureKey
     command: unlock
 ```
-For docker run add the `unlock` command after the image:
+#### docker run
 
-``` shell
+```shell
 docker run --rm \
     -e TRUENAS_HOST=10.0.0.1:443 \
     -e TRUENAS_API_KEY=1-5x23jkKKsy \
@@ -93,7 +92,7 @@ docker run --rm \
 ```
 
 ### Running on a schedule
-If you want to unlock your datasets automatically when you Truenas server starts then setting a cron schedule to run every 10 seconds works well (The datasets will unlock before VMs or Kubernetes deploys). This can be achieved by setting a `CRONTAB=*/10 * * * * * * unlock` environment variable.
+If you want to unlock your datasets automatically when your Truenas server starts then setting a cron schedule to run every 10 seconds works well (The datasets will unlock before VMs or Kubernetes deploys). This can be achieved by setting a `CRONTAB=*/10 * * * * * * unlock` environment variable.
 
 #### docker-compose
 ```yaml
