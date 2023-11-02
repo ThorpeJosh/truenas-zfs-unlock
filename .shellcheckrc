@@ -1,0 +1,2 @@
+# Suggest ${VAR} in place of $VAR
+enable=require-variable-braces
