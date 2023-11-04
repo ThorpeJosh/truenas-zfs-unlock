@@ -32,9 +32,9 @@ To protect the data on your drives from unauthorised access during transit or in
 
 This image uses the [semver](https://semver.org/) format for releases, with this image's major version matching the Truenas API major version in use.
 
-For example, all 2.*.* image releases use Truenas API v2
+For example, all `2.*.*` image releases use Truenas API `v2`
 
-**Avoid using the `latest` tag in production environments. Lock the tag to a specific version to prevent version conflics**
+**Avoid using the `latest` tag in production environments. Lock the tag to a specific version**
 
 ### Registries
 The image is published on both [docker.io](https://hub.docker.com/r/thorpejosh/truenas-zfs-unlock) and [ghcr.io](https://github.com/ThorpeJosh/ssh-agent-docker/pkgs/container/truenas-zfs-unlock), and can be pulled with either:
@@ -47,8 +47,6 @@ docker pull ghcr.io/thorpejosh/truenas-zfs-unlock:latest
 This tool is designed to run on a machine that has network access to the Truenas server but preferably not in the same physical location. This image can run on a cloud server, raspberry pi, laptop, workstation, etc.
 
 Firstly set up (or edit) your zfs datasets to use "Passphrase" encryption, this will enable you to set the key yourself and therefore the encryption keys won't be stored by Truenas.
-
-Use a password generator that is set to use capital and lowercase lettering, numerals and special characters with the maximum allowable length (128 characters for example).
 
 Generate a Truenas API key in the web UI.
 
