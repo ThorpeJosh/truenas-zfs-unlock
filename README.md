@@ -46,7 +46,7 @@ This tool is designed to run on a machine that has network access to the Truenas
 
 Firstly set up (or edit) your zfs datasets to use "Passphrase" encryption, this will enable you to set the key yourself and therefore the encryption keys won't be stored by Truenas.
 
-Generate a Truenas API key in the web UI, as this tool works by sending unlock requests via the Truenas API. 
+Generate a Truenas API key in the web UI, as this tool works by sending unlock requests via the Truenas API.
 
 Several environment variables below need to be configured for the tool to function.
 
