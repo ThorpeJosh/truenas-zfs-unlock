@@ -13,7 +13,7 @@ ZFS dataset encryption provides a multitude of security benefits, chiefly; the s
 
 Unfortunately, by default Truenas stores ZFS dataset encryption keys on the boot drive. As the boot drive is physically located with all the encrypted drives the benefits of zfs encryption are undermined.
 
-To protect the data on your drives from unauthorised access during transporation or in the event of theft, keys cannot be stored locally on your Truenas server.
+To protect the data on your drives from unauthorised access during transportation or in the event of theft, keys cannot be stored locally on your Truenas server.
 
 ## Image variants
 ### Supported Architectures
