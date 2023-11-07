@@ -6,16 +6,14 @@
 [![Tests](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/test.yml/badge.svg)](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/test.yml)
 [![Publish Docker Image](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/docker-publish.yml)
 
-This tool allows you to control your Truenas ZFS encryption keys by enabling offsite storage of your keys, remote dataset unlocking, and only unlocking your data when it is neccassary.
+This tool grants you full control of your Truenas ZFS encryption keys by enabling offsite key storage, remote dataset unlocking, and automated control over when your datasets are unlocked.
 
-## Purpose?
-ZFS dataset encryption provides a multitude of security benefits, chiefly; the securing of physical data drives when at rest, in transit, after disposal, and in the event of hardware theft.
+## Why?
+ZFS dataset encryption provides a multitude of security benefits, chiefly; the securing of hardware data drives when at rest, in transit, after disposal, and in the event of theft.
 
-Proper encryption key management is paramount, as unauthorised possession of keys and data drives entirely undermines the benefits of zfs encryption.
+Unfortunately, by default Truenas stores ZFS dataset encryption keys on the boot drive. As the boot drive is physically located with all the encrypted drives the benefits of zfs encryption are undermined.
 
-Unfortunately, by default Truenas stores ZFS dataset encryption keys on the boot drive. As the boot drive is physically located with all the encrypted drives the benefits of zfs encryption are almost entirely undermined.
-
-To protect the data on your drives from unauthorised access during transit or in the event of theft, keys cannot be stored locally on your Truenas server.
+To protect the data on your drives from unauthorised access during transporation or in the event of theft, keys cannot be stored locally on your Truenas server.
 
 ## Image variants
 ### Supported Architectures
@@ -44,13 +42,13 @@ docker pull ghcr.io/thorpejosh/truenas-zfs-unlock:latest
 ```
 
 ## How to use this image
-This tool is designed to run on a machine that has network access to the Truenas server but preferably not in the same physical location. This image can run on a cloud server, raspberry pi, laptop, workstation, etc.
+This tool is designed to run on a machine that has network access to the Truenas server, preferably in a different physical location for enhanced security. This image can run on a cloud server, raspberry pi, laptop, workstation, etc.
 
 Firstly set up (or edit) your zfs datasets to use "Passphrase" encryption, this will enable you to set the key yourself and therefore the encryption keys won't be stored by Truenas.
 
-Generate a Truenas API key in the web UI.
+Generate a Truenas API key in the web UI, as this tool works by sending unlock requests via the Truenas API. 
 
-This container operates by sending requests to the Truenas API. Several environment variables need to be configured before it will work.
+Several environment variables below need to be configured for the tool to function.
 
 ### Environment Variables
 
