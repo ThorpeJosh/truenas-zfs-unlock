@@ -33,7 +33,7 @@ This image uses the [semver](https://semver.org/) format for releases, with this
 
 For example, all `2.*.*` image releases use Truenas API `v2`
 
-**Avoid using the `latest` tag in production environments. Lock the tag to a specific version**
+**Avoid using the `latest` tag in production environments. Lock the tag to a specific version.**
 
 ### Registries
 The image is published on both [docker.io](https://hub.docker.com/r/thorpejosh/truenas-zfs-unlock) and [ghcr.io](https://github.com/ThorpeJosh/ssh-agent-docker/pkgs/container/truenas-zfs-unlock), and can be pulled with either:
