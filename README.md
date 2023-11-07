@@ -5,6 +5,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/thorpejosh/truenas-zfs-unlock)](https://hub.docker.com/r/thorpejosh/truenas-zfs-unlock)
 [![Tests](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/test.yml/badge.svg)](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/test.yml)
 [![Publish Docker Image](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/ThorpeJosh/truenas-zfs-unlock/actions/workflows/docker-publish.yml)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/ThorpeJosh/truenas-zfs-unlock/main.svg)](https://results.pre-commit.ci/latest/github/ThorpeJosh/truenas-zfs-unlock/main)
 
 This tool grants you full control of your Truenas ZFS encryption keys by enabling offsite key storage, remote dataset unlocking, and automated control over when your datasets are unlocked.
 
