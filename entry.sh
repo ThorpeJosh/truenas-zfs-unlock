@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ -n "$CRONTAB" ]; then
-  echo "$CRONTAB" > /crontab.txt
+if [ -n "${CRONTAB}" ]; then
+  echo "${CRONTAB}" > /crontab.txt
 else
   echo "Error: Missing 'CRONTAB' environment variable"
   exit 1
