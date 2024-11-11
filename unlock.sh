@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e
 
+# Configure global curl flags
+curl_flags="--silent --show-error --connect-timeout 3"
+if [ "${SKIP_CERT_VERIFY}" = "true" ]; then
+  curl_flags="${curl_flags} --insecure"
+fi
+
 load_secrets() {
   # Load all docker secrets into this scripts env. This will override any matching global vars
   for var in $(env | grep '^FILE__'); do
@@ -36,28 +42,35 @@ is_locked() {
   dataset="$2"
 
   # Check if dataset is locked or not
-  curl_response_file="$(mktemp)"
+  curl_stdout_file="$(mktemp)"
+  curl_stderr_file="$(mktemp)"
+  # Ignore shellchecks recommendation to double quote "$curl_flags"
+  # shellcheck disable=SC2086
   http_code="$(
-    curl -X 'GET' \
+    curl ${curl_flags} -X 'GET' \
     "https://${TRUENAS_HOST}/api/v2.0/pool/dataset?id=${pool}/${dataset}" \
     -H 'accept: */*' \
     -H "Authorization: Bearer ${api_token}" \
-    --output "${curl_response_file}" \
+    --output "${curl_stdout_file}" \
     --write-out "%{http_code}" \
-    --connect-timeout 2 \
-    --silent \
-    --insecure \
+    2>"${curl_stderr_file}"
   )"
+
   # Handle non 200 code
   if [ "${http_code}" -ne 200 ]; then
     echo "Error: curl received a ${http_code} code"
-    cat "${curl_response_file}" && echo ""
-    rm "${curl_response_file}"
+    printf "STDERR: %s\n" "$(cat "${curl_stderr_file}")"
+    printf "STDOUT: %s\n" "$(cat "${curl_stdout_file}")"
+    rm "${curl_stderr_file}"
+    rm "${curl_stdout_file}"
     return 1
   fi
 
-  locked="$(jq '.[].locked' "${curl_response_file}")"
-  rm "${curl_response_file}"
+  # Extract lock status of dataset from curl response and cleanup temp files.
+  locked="$(jq '.[].locked' "${curl_stdout_file}")"
+  rm "${curl_stderr_file}"
+  rm "${curl_stdout_file}"
+
   # Handle invalid json response (Happens even with a 200)
   if [ -z "${locked}" ]; then
     echo "Invalid response from api"
@@ -80,7 +93,6 @@ unlock (){
   dataset_path="${pool}/${dataset}"
   passphrase="$3"
 
-  curl_response_file="$(mktemp)"
   json=$(jq --null-input \
     --arg dataset_path "${dataset_path}" \
     --arg passphrase "${passphrase}" \
@@ -102,29 +114,34 @@ unlock (){
       }
     '
   )
+
+  curl_stdout_file="$(mktemp)"
+  curl_stderr_file="$(mktemp)"
+  # Ignore shellchecks recommendation to double quote "$curl_flags"
+  # shellcheck disable=SC2086
   http_code="$(
-    curl -X 'POST' \
+    curl ${curl_flags} -X 'POST' \
     "https://${TRUENAS_HOST}/api/v2.0/pool/dataset/unlock" \
     -H 'accept: */*' \
     -H "Authorization: Bearer ${api_token}" \
     -H 'Content-Type: application/json' \
     -d "${json}" \
-    --connect-timeout 2 \
-    --output "${curl_response_file}" \
+    --output "${curl_stdout_file}" \
     --write-out "%{http_code}" \
-    --insecure \
-    --silent
+    2>"${curl_stderr_file}"
   )"
 
   # Log non-200 response and cleanup
   if [ "${http_code}" -ne 200 ]; then
     echo "Error: curl received a ${http_code} code"
-    cat "${curl_response_file}" && echo ""
+    printf "STDERR: %s\n" "$(cat "${curl_stderr_file}")"
+    printf "STDOUT: %s\n" "$(cat "${curl_stdout_file}")"
   else
     echo "Got a 200 code in response to unlocking request. Does not imply success unfortunately"
     echo "Run again to get the 'locked' status for ${dataset_path}"
   fi
-  rm "${curl_response_file}"
+  rm "${curl_stderr_file}"
+  rm "${curl_stdout_file}"
 }
 
 # Unlock script start point
