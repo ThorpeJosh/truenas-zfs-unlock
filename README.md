@@ -58,8 +58,9 @@ Several environment variables below need to be configured for the tool to functi
 | TZ                         | TZ=America/Chicago              | *Optional.* Used to set timezone for crontab and log messages. *Default='UTC'*                                                    |
 | TRUENAS_HOST               | TRUENAS_HOST=10.0.0.1:443       | IP:port or hostname of Truenas Server                                                                                             |
 | TRUENAS_API_KEY            | TRUENAS_API_KEY=1-5x23jkKKsy    | Truenas API Key                                                                                                                   |
-| CRONTAB                    | CRONTAB=*/10 * * * * * * unlock | *Optional.* Enables running on a schedule with vixie cron expressions:<br>`s m h dom month dow year command`                         |
-| ZFS__\<pool\>__\<dataset\> | ZFS__tank__photos=@#$^1234asdf   | Declare a dataset(s) to unlock. The zfs `pool/dataset` are declared after the `ZFS__` prefix, and the value is the passphrase/key |
+| SKIP_CERT_VERIFY           | SKIP_CERT_VERIFY=true           | *Optional.* Set to `true` to skip Truenas SSL/TLS certificate verification. Required for self-signed certs. *Default=false*       |
+| CRONTAB                    | CRONTAB=*/10 * * * * * * unlock | *Optional.* Enables running on a schedule with vixie cron expressions:<br>`s m h dom month dow year command`                      |
+| ZFS__\<pool\>__\<dataset\> | ZFS__tank__photos=@#$^1234asdf  | Declare a dataset(s) to unlock. The zfs `pool/dataset` are declared after the `ZFS__` prefix, and the value is the passphrase/key |
 
 ### Environment Variables from Files (Docker Secrets)
 
@@ -78,6 +79,7 @@ services:
     environment:
       - TRUENAS_HOST=10.0.0.1:443
       - TRUENAS_API_KEY=1-5x23jkKKsy
+      - SKIP_CERT_VERIFY=true
       - ZFS__tank__photos=SomeSecureKey
     command: unlock
 ```
@@ -87,6 +89,7 @@ services:
 docker run --rm \
     -e TRUENAS_HOST=10.0.0.1:443 \
     -e TRUENAS_API_KEY=1-5x23jkKKsy \
+    -e SKIP_CERT_VERIFY=true \
     -e ZFS__tank__photos=SomeSecureKey \
     thorpejosh/truenas-zfs-unlock:latest unlock
 ```
@@ -104,6 +107,7 @@ services:
       - TZ=America/Chicago
       - TRUENAS_HOST=10.0.0.1:443
       - TRUENAS_API_KEY=1-5x23jkKKsy
+      - SKIP_CERT_VERIFY=true
       - ZFS__tank__home=someRandomGeneratedKey
       - ZFS__tank__photos=SomeSecureKey
       # supercronic allows vixie cron expressions:
@@ -132,6 +136,7 @@ services:
     environment:
       - TZ=America/Chicago
       - TRUENAS_HOST=10.0.0.1:443
+      - SKIP_CERT_VERIFY=true
       - FILE__TRUENAS_API_KEY=/run/secrets/TRUENAS_API_KEY
       - FILE__ZFS__tank__home=/run/secrets/ZFS_HOME_KEY
       - FILE__ZFS__tank__photos=/run/secrets/ZFS_PHOTOS_KEY
