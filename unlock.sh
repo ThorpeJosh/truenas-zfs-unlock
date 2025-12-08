@@ -99,7 +99,7 @@ unlock (){
     '
       {
         "id": $dataset_path,
-        "unlock_options": {
+        "options": {
           "key_file": false,
           "recursive": false,
           "force": true,
