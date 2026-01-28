@@ -29,9 +29,10 @@ To protect the data on your drives from unauthorised access during transportatio
 ### Shared tags
 * `latest`, `${IMAGE_VERSION}`
 
-This image uses the [semver](https://semver.org/) format for releases, with this image's major version matching the Truenas API major version in use.
+This image uses the [semver](https://semver.org/) format for releases, ~~with this image's major version matching the Truenas API major version in use~~.
+~~For example, all `2.*.*` image releases use Truenas API `v2`~~.
 
-For example, all `2.*.*` image releases use Truenas API `v2`
+**Note:** Truenas has changed their api versioning and introduced breaking changes between versions 25.04 and 25.10, see release notes to ensure compatibility.
 
 **Avoid using the `latest` tag in production environments. Lock the tag to a specific version.**
 
