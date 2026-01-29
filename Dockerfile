@@ -9,7 +9,11 @@ RUN apk add --no-cache \
 
 ENV TZ="UTC"
 
-COPY --chmod=500 entry.sh /entry.sh
-COPY --chmod=500 unlock.sh /usr/local/bin/unlock
+RUN addgroup -S app && adduser -S -G app app
+
+COPY --chown=app:app --chmod=500 entry.sh /entry.sh
+COPY --chown=app:app --chmod=500 unlock.sh /usr/local/bin/unlock
+
+USER app
 
 CMD ["/entry.sh"]
